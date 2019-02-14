@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Settings</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+
+	<!--all css links-->
+	<link rel="stylesheet" type="text/css" href="../css/topbar.css">
+	<link rel="stylesheet" type="text/css" href="../css/global.css">
+	<link rel="stylesheet" type="text/css" href="../css/settings.css">
+
+	<!--all javascript links-->
+	<script src="../javascript/settings.js"></script>
+</head>
+
+<body class="background" onload="onLoadFunction();">
+	<ul class="topbar">
+		<li style="float: left;">
+			<a href="game.html" class="topBarButton">Draw Tree!</a>
+		</li>
+	</ul>
+	<i>*</i>
+	<form name="Settings" onSubmit="return saveChanges()">
+		<b>Number of layers. The Maximum value is 15.</b>
+		<p>
+			<input type="radio" name="BranchCountSelection" value="Custom" />Cutstom Value</p>
+		<input type="text" name="BranchCount" onkeypress='return event.charCode >= 48 && event.charCode <= 57'/>
+		<p>
+			<input type="radio" name="BranchCountSelection" value="Random" />Random</p>
+		<br>
+
+		<b>Starting Segment Length. The default value is 4.</b>
+		<p>
+			<input type="radio" name="BranchLengthSelection" value="Custom" />Cutstom Value</p>
+		<input type="text" name="BranchLength" onkeypress='return event.charCode >= 48 && event.charCode <= 57'/>
+		<p>
+			<input type="radio" name="BranchLengthSelection" value="Random" />Random</p>
+		<br>
+
+		<b>Average Direction?</b>
+		<p>
+			<input type="radio" name="Direction" value="Left" />Left</p>
+		<p>
+			<input type="radio" name="Direction" value="Right" />Right</p>
+		<p>
+			<input type="radio" name="Direction" value="Random" />Random</p>
+
+		<b>Is lighting is needed?</b>
+		<p>
+			<input type="radio" name="Lighting" value="true" />Lights ON</p>
+		<p>
+			<input type="radio" name="Lighting" value="false" />Ligts OFF</p>
+		<input name="Submit" type="submit" value="Save Changes" />
+	</form>
+</body>
+
+</html>

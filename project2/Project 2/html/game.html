@@ -1,0 +1,93 @@
+<html>
+	
+<script id="shader-fs" type="x-shader/x-fragment">
+    precision mediump float;
+
+    varying vec3 vLightWeighting;
+	varying vec3 customFragColour;
+
+    void main(void) {
+        gl_FragColor = vec4(customFragColour * vLightWeighting, 1);
+    }
+</script>
+
+<script id="shader-vs" type="x-shader/x-vertex">
+    attribute vec3 aVertexPosition;
+    attribute vec3 aVertexNormal;
+	uniform vec3 customColour;
+	varying vec3 customFragColour;
+
+    uniform mat4 uMVMatrix;
+    uniform mat4 uPMatrix;
+    uniform mat3 uNMatrix;
+
+    uniform vec3 uAmbientColor;
+
+    uniform vec3 uLightingDirection;
+    uniform vec3 uDirectionalColor;
+
+    uniform bool uUseLighting;
+
+    varying vec3 vLightWeighting;
+
+    void main(void) {
+		customFragColour = customColour;
+        gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+
+        if (!uUseLighting) {
+            vLightWeighting = vec3(1.0, 1.0, 1.0);
+        } else {
+            vec3 transformedNormal = uNMatrix * aVertexNormal;
+            float directionalLightWeighting = max(dot(transformedNormal, uLightingDirection), 0.0);
+            vLightWeighting = uAmbientColor + uDirectionalColor * directionalLightWeighting;
+        }
+    }
+</script>
+	
+	
+<head>
+    <title>Bug Zapper Game</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+
+    <!--all css links-->
+    <link rel="stylesheet" type="text/css" href="../css/topbar.css">
+    <link rel="stylesheet" type="text/css" href="../css/global.css">
+    <link rel="stylesheet" type="text/css" href="../css/game.css">
+
+    <!--all javascript links-->
+    <script src="../javascript/webgl-utils.js"></script>
+    <script src="../javascript/gl-matrix.js"></script>
+</head>
+
+<!-- Call runapplication on load, this will trigger everything else.-->
+
+<body id="body" class="background" onload="runApplication();" onresize="drawScene();">
+    <ul class="topbar">
+        <li style="float: left;">
+            <a href="game.html" class="topBarButton">Restart Game!</a>
+        </li>
+        <li style="float: left;">
+            <a href="settings.html" class="topBarButton">Settings</a>
+        </li>
+    </ul>
+
+    <div id="overlay" class="overlay">
+        <span class="span">
+            <br><br><br><p id="UserMessage"></p>
+        </span>
+    </div>
+
+    <i>*</i>
+    <canvas class="game" id="game-surface" style="align: center;">
+        Your browser is not supported.
+        <div id="overlay_image"></div>
+    </canvas>
+
+    <i> © 2016 Thunder Games, All Rights Reserved </i>
+
+    <script src="../javascript/circle.js"></script>
+    <script src="../javascript/game.js"></script>
+    <script src="../javascript/explosion.js"></script>
+</body>
+
+</html>
